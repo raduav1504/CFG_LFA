@@ -3,14 +3,14 @@ from typing import List, Dict, Set, Optional
 
 class CFG:
     def __init__(self):
-        # Task 1: Define CFG components
+        # Task 1: definim component cfg
         self.non_terminals: Set[str] = {'S'}
         self.terminals: Set[str] = {'a', 'b'}
         self.start_symbol: str = 'S'
         self.productions: Dict[str, List[str]] = {'S': ['aSb', 'ε']}
     
     def generate_strings(self, count: int = 10, max_length: int = 10) -> List[str]:
-        # Task 2: Generate random strings from the CFG
+        # Task 2: generator stringuri random
         generated = []
         for _ in range(count):
             string = self._generate_single_string(max_length)
@@ -45,9 +45,9 @@ class CFG:
         return None
     
     def show_derivation(self, target: str) -> List[str]:
-        # Task 3: Show derivation steps for a target string
+        # Task 3: pasii de derivation
         if not self.is_member(target):
-            return [f"String '{target}' is not in the language"]
+            return [f"Stringul '{target}' nu face parte din limbaj "]
         
         if target == '':
             return ['S', 'ε']
@@ -72,7 +72,7 @@ class CFG:
         return derivation
     
     def is_member(self, string: str) -> bool:
-        # Task 4: Check if string belongs to the language
+        # Task 4: verificam daca stringul face parte din limbaj
         a_count = string.count('a')
         b_count = string.count('b')
         
@@ -82,7 +82,7 @@ class CFG:
 
 
 class ExtendedCFG:
-    # Task 5 Bonus: Extended CFG for L = {a^n b^n c^n | n ≥ 1}
+    # Task 5 
     def __init__(self):
         self.non_terminals: Set[str] = {'S', 'A', 'B'}
         self.terminals: Set[str] = {'a', 'b', 'c'}
@@ -109,7 +109,7 @@ class ExtendedCFG:
 def main():
     cfg = CFG()
     
-    # Task 1: Display CFG definition
+    # Task 1: Display definitie cfg
     print("Task 1: CFG Definition")
     print(f"Non-terminals: {cfg.non_terminals}")
     print(f"Terminals: {cfg.terminals}")
@@ -118,52 +118,40 @@ def main():
     for nt, prods in cfg.productions.items():
         print(f"  {nt} → {' | '.join(prods)}")
     
-    # Task 2: Generate strings
-    print("\nTask 2: String Generation")
+    # Task 2: gerenator stringuri
+    print("\nTask 2: String Generator")
     generated = cfg.generate_strings(10, 10)
     for i, s in enumerate(generated, 1):
         display_s = s if s else 'ε'
         print(f"{i}. '{display_s}'")
     
-    # Task 3: Show derivation for a sample string
-    print("\nTask 3: Derivation Example")
-    sample_string = "aabb"
+    # Task 3: Derivation
+    print("\nTask 3: Exemplu derivation")
+    sample_string = input("Input string: ").strip()
     derivation = cfg.show_derivation(sample_string)
-    print(f"Derivation for '{sample_string}':")
-    for i, step in enumerate(derivation):
-        print(f"  {step}" + (" →" if i < len(derivation) - 1 else ""))
+    print(f"Derivation for '{sample_string}': {' → '.join(derivation)}")
     
-    # Task 4: Interactive membership testing
+    # Task 4: Membership Tester
     print("\nTask 4: Membership Testing")
     while True:
-        test_string = input("Enter string to test (empty to continue): ").strip()
+        test_string = input("Input string: ").strip()
         if not test_string:
             break
         
         result = cfg.is_member(test_string)
-        print(f"'{test_string}': {'ACCEPTED' if result else 'REJECTED'}")
-        
-        if result:
-            derivation = cfg.show_derivation(test_string)
-            for i, step in enumerate(derivation):
-                print(f"  {step}" + (" →" if i < len(derivation) - 1 else ""))
+        print(f"'{test_string}': {'True' if result else 'False'}")
     
-    # Task 5: Bonus - Extended CFG
-    print("\nTask 5 (Bonus): Extended CFG for L = {a^n b^n c^n | n ≥ 1}")
+    
+    # Task 5:Extended CFG
+    print("\nTask 5: Extended CFG for L = {a^n b^n c^n | n ≥ 1}")
     extended_cfg = ExtendedCFG()
     
-    test_cases = ["abc", "aabbcc", "aaabbbccc", "aabbbc", "abcc", ""]
-    for test in test_cases:
-        result = extended_cfg.is_member(test)
-        display_test = test if test else 'ε'
-        print(f"'{display_test}': {'ACCEPTED' if result else 'REJECTED'}")
-    
     while True:
-        test_string = input("Extended CFG test (empty to finish): ").strip()
+        test_string = input("Input string : ").strip()
         if not test_string:
             break
         result = extended_cfg.is_member(test_string)
-        print(f"'{test_string}': {'ACCEPTED' if result else 'REJECTED'}")
+        print(f"'{test_string}': {'True' if result else 'False'}")
 
 
 if __name__ == "__main__":
